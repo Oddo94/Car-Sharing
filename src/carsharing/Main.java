@@ -1,31 +1,28 @@
 package carsharing;
 
 import carsharing.controller.UIManager;
+import carsharing.database.DatabaseManager;
+import carsharing.utils.FileChecker;
 
 public class Main {
 
     public static void main(String[] args) {
-//        String createTableStatement  = "CREATE TABLE IF NOT EXISTS COMPANY(" +
-//                "ID INT(10) NOT NULL AUTO_INCREMENT" +
-//                "NAME VARCHAR(50) NOT NULL UNIQUE," +
-//                "PRIMARY KEY(ID))";
-//
-//        setDatabaseName(args);
-//
-//        DatabaseOperations databaseOperations = new DatabaseOperations(DatabaseManager.getDatabaseConnection());
-//        int executionResult = databaseOperations.createTable(createTableStatement);
+//        String path = "./src/carsharing/db";
+//        String extension = "db";
+//        int folderLevel = 1;
+
+//        if(!FileChecker.isFilePresent(path, extension, folderLevel)) {
+//            System.out.println("Database file not found! Setting up database...");
+//            DatabaseManager.setupDatabase(args, false);
+//        } else {
+//            System.out.println("Database file found!");
+//        }
+        DatabaseManager.setupDatabase(args, false);
+
+        DatabaseManager.createTableStructure();
 
         UIManager uiManager = new UIManager();
         uiManager.manageUI(args);
 
-
     }
-
-//    private static void setDatabaseName(String[] args) {
-//        if(args.length == 2 && "-databaseFileName".equals(args[0])) {
-//            DatabaseManager.setDatabaseName(args[1]);
-//        } else {
-//            DatabaseManager.setDatabaseName("carsharing");
-//        }
-
 }

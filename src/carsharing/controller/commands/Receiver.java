@@ -18,16 +18,11 @@ public class Receiver {
         List<CompanyDto> companiesList  = repository.getAllCompanies();
 
         if(companiesList.size() > 0) {
-            System.out.println("Company list:");
+            System.out.println("\nCompany list:");
             companiesList.stream()
                     .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
-
-            System.out.println();
-
-            //return 0;
         } else {
             System.out.println("The company list is empty!");
-            System.out.println();
         }
 
         return 0;
@@ -57,6 +52,7 @@ public class Receiver {
                 return -1;
         }
 
+        System.out.println();
         System.out.println(menu);
 
         return 0;

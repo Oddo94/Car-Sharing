@@ -48,28 +48,31 @@ public class CompanyDao implements Dao<Company>{
     }
 
     @Override
-    public void save(Company company) {
+    public int save(Company company) {
         if(company == null) {
-            return;
+            return -1;
         }
 
        try(PreparedStatement preparedStatement = databaseConnection.prepareStatement(insertCompanyStatement)) {
            preparedStatement.setString(1, company.getName());
            preparedStatement.execute();
 
+           return 0;
+
        } catch(SQLException ex) {
            System.err.println(ex.getMessage());
        }
 
+       return -1;
     }
 
     @Override
-    public void update(long id, Company company) {
-        return;
+    public int update(long id, Company company) {
+        return -1;
     }
 
     @Override
-    public void delete(long id) {
-        return;
+    public int delete(long id) {
+        return -1;
     }
 }

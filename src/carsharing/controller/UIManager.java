@@ -14,11 +14,7 @@ import java.util.regex.Pattern;
 public class UIManager {
 
     public void manageUI(String[] inputArguments) {
-        DatabaseManager.setupDatabase(inputArguments, false);
         Scanner scanner = new Scanner(System.in);
-
-//        displayMenu(MenuType.GENERAL_MENU);
-//        String input = scanner.nextLine().replace("> ", "").trim();
 
         GENERAL_MENU: while(true) {
             displayMenu(MenuType.GENERAL_MENU);
@@ -43,7 +39,6 @@ public class UIManager {
                     commandInvoker.setCommand(loginManagerCommand);
                     executionResult = commandInvoker.executeCommand();
 
-//                    displayMenu(MenuType.MANAGER_MENU);
                     input = scanner.nextLine().replace("> ", "").trim();
 
                     if (!isDigit(input)) {
@@ -55,20 +50,17 @@ public class UIManager {
                             Command displayCompaniesCommand = new CompanyListCommand(commandReceiver);
                             commandInvoker.setCommand(displayCompaniesCommand);
                             executionResult = commandInvoker.executeCommand();
-                            //System.out.println("Inside display company list command...");
                             break;
 
                         case 2:
                             Command insertCompanyCommand = new InsertCompanyCommand(commandReceiver, scanner);
                             commandInvoker.setCommand(insertCompanyCommand);
                             executionResult = commandInvoker.executeCommand();
-
-                            //System.out.println("Inside create company command...");
                             break;
 
                         case 0:
-                            System.out.println("Inside back command...Returning to general menu");
                             //Goes back to general menu
+                            System.out.println();
                             break MANAGER_MENU;
                         default:
                             break;

@@ -18,11 +18,16 @@ public class InsertCompanyCommand implements Command {
 
     @Override
     public int execute() {
-        System.out.println("Enter the company name:");
+        System.out.println("\nEnter the company name:");
         String companyName = scanner.nextLine().replace("> ", "").trim();
         CompanyDto companyDto = new CompanyDto(companyName);
 
         int executionResult = receiver.insertCompany(companyDto);
+
+        if(executionResult == 0) {
+            System.out.println("The company was created!");
+        }
+
 
         return executionResult;
     }

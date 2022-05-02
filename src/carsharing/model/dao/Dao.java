@@ -7,10 +7,10 @@ public interface Dao<T> {
 
     List<T> getAll();
 
-    void save(T t);
+    int save(T t);
 
-    void update(long id, T t);
+    int update(long id, T t);
 
-    void delete(long id);
+    int delete(long id);
 
 }
