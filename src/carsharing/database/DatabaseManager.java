@@ -59,14 +59,29 @@ public class DatabaseManager {
         String tableName = "COMPANY";
         DatabaseOperations databaseOperations = new DatabaseOperations(getDatabaseConnection());
 
-        String createTableStatement = "CREATE TABLE IF NOT EXISTS COMPANY(" +
-                "ID INT(10) IDENTITY NOT NULL PRIMARY KEY," +
-                "NAME VARCHAR(50) NOT NULL UNIQUE)";
+        String createCompanyTableStatement = "CREATE TABLE IF NOT EXISTS COMPANY(" +
+                "ID INT(10) IDENTITY NOT NULL," +
+                "NAME VARCHAR(50) NOT NULL UNIQUE," +
+                "PRIMARY KEY(ID))";
+
+        String createCarTableStatement = "CREATE TABLE IF NOT EXISTS CAR (" +
+                "ID INT(10) IDENTITY NOT NULL," +
+                "NAME VARCHAR(50) NOT NULL UNIQUE," +
+                "COMPANY_ID INT(10) NOT NULL," +
+                "PRIMARY KEY(ID)," +
+                "FOREIGN KEY(COMPANY_ID) REFERENCES COMPANY(ID))";
+
 
         //Creates a new table if it doesn't already exist
-        int creationResult = databaseOperations.createTable(createTableStatement);
+        int companyTblCreationResult = databaseOperations.createTable(createCompanyTableStatement);
+        int carTblCreationResult = databaseOperations.createTable(createCarTableStatement);
 
-        return creationResult;
+
+        if(companyTblCreationResult == -1 || carTblCreationResult == -1) {
+            return -1;
+        }
+
+        return 0;
     }
 
     private static void setDatabaseName(String databaseName) {
