@@ -1,5 +1,7 @@
 package carsharing.controller.commands;
 
+import carsharing.model.Car;
+import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
@@ -14,33 +16,27 @@ public class Receiver {
         this.repository = repository;
     }
 
-    public int displayCompanyList() {
+    public List<CompanyDto> getCompanyList() {
         List<CompanyDto> companiesList  = repository.getAllCompanies();
 
-        if(companiesList.size() > 0) {
-            System.out.println("\nChoose the company:");
-            companiesList.stream()
-                    .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
-        } else {
-            System.out.println("The company list is empty!");
-        }
+//        if(companiesList.size() > 0) {
+//            System.out.println("\nChoose a company:");
+//            companiesList.stream()
+//                    .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
+//        } else {
+//            System.out.println("The company list is empty!");
+//        }
 
-        return 0;
+        return companiesList;
     }
 
     public int displayCompanyMenu(String companyName) {
-        String companyMenu = String.format("\n'%s' company\n1. Car To Go\n2. Create a car\n0. Back", companyName);
+        String companyMenu = String.format("\n'%s' company\n1. Car list\n2. Create a car\n0. Back", companyName);
         System.out.println(companyMenu);
 
         return 0;
     }
 
-    public int insertCompany(CompanyDto companyDto) {
-        int executionResult = repository.insertNewCompany(companyDto);
-
-        return executionResult;
-
-    }
     public int displayMenu(MenuType menuType) {
         String menu;
 
@@ -64,6 +60,29 @@ public class Receiver {
 
         return 0;
 
+    }
+
+    public int insertCompany(CompanyDto companyDto) {
+        int executionResult = repository.insertCompany(companyDto);
+
+        return executionResult;
+
+    }
+
+    public int displayCompanyCars(String companyName) {
+        List<CarDto> carsList = repository.getAllCompanyCars(companyName);
+
+        carsList
+                .stream()
+                .forEach(carDto -> System.out.println(String.format("%d. %s", carDto.getId(), carDto.getName())));
+
+        return 0;
+    }
+
+    public int insertCar(Car car, String companyName) {
+        int executionResult = repository.insertCar(car, companyName);
+
+        return executionResult;
     }
 
 }

@@ -1,7 +1,10 @@
 package carsharing.repository;
 
+import carsharing.model.Car;
 import carsharing.model.Company;
+import carsharing.model.dao.CarDao;
 import carsharing.model.dao.CompanyDao;
+import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
 
 import java.sql.Connection;
@@ -30,13 +33,36 @@ public class CarSharingRepository {
         return resultList;
     }
 
-    public int insertNewCompany(CompanyDto companyDto) {
+    public int insertCompany(CompanyDto companyDto) {
         CompanyDao companyDao = new CompanyDao(databaseConnection);
 
         Company company = new Company(companyDto.getName());
 
-        companyDao.save(company);
+        int insertionResult = companyDao.save(company);
 
-        return 0;
+        return insertionResult;
+    }
+
+    public List<CarDto> getAllCompanyCars(String companyName) {
+        CarDao carDao = new CarDao(databaseConnection, companyName);
+
+        List<Car> carsList = carDao.getAll();
+
+        List<CarDto> resultList = carsList
+                .stream()
+                .map(car -> new CarDto(car.getId(), car.getName()))
+                .sorted(Comparator.comparing(carDto -> carDto.getId()))
+                .collect(Collectors.toList());
+
+        return resultList;
+
+    }
+
+    public int insertCar(Car car, String companyName) {
+        CarDao carDao = new CarDao(databaseConnection, companyName);
+
+        int insertionResult = carDao.save(car);
+
+        return insertionResult;
     }
 }

@@ -5,6 +5,7 @@ import carsharing.database.DatabaseManager;
 import carsharing.model.dto.CompanyDto;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
+import carsharing.utils.InputChecker;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -20,7 +21,7 @@ public class UIManager {
             displayMenu(MenuType.GENERAL_MENU);
             String input = scanner.nextLine().replace("> ", "").trim();
 
-            if(!isDigit(input)) {
+            if(!InputChecker.isDigit(input)) {
                 return;
             }
             int commandValue = Integer.parseInt(input);
@@ -41,13 +42,13 @@ public class UIManager {
 
                     input = scanner.nextLine().replace("> ", "").trim();
 
-                    if (!isDigit(input)) {
+                    if (!InputChecker.isDigit(input)) {
                         return;
                     }
                     commandValue = Integer.parseInt(input);
                     switch (commandValue) {
                         case 1:
-                            Command displayCompaniesCommand = new CompanyListCommand(commandReceiver);
+                            Command displayCompaniesCommand = new CompanyListCommand(commandReceiver, scanner);
                             commandInvoker.setCommand(displayCompaniesCommand);
                             executionResult = commandInvoker.executeCommand();
                             break;
@@ -94,18 +95,6 @@ public class UIManager {
         }
 
         System.out.println(menu);
-
-    }
-
-    private boolean isDigit(String input) {
-        if(input == null) {
-            return false;
-        }
-
-        Pattern pattern = Pattern.compile("^\\d$");
-        Matcher matcher = pattern.matcher(input);
-
-        return matcher.matches();
 
     }
 }
