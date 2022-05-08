@@ -79,15 +79,19 @@ public class Receiver {
     public int displayCompanyCars(String companyName) {
         List<CarDto> carList = repository.getAllCompanyCars(companyName);
 
+        int count = 1;
         if(carList.size() == 0) {
             System.out.println("\nThe car list is empty!");
             return -1;
         }
 
         System.out.println("\nCar list:");
-        carList
-                .stream()
-                .forEach(carDto -> System.out.println(String.format("%d. %s", carDto.getId(), carDto.getName())));
+//        carList
+//                .stream()
+//                .forEach(carDto -> System.out.println(String.format("%d. %s", carDto.getId(), carDto.getName())));
+        for(CarDto car : carList) {
+            System.out.println(String.format("%d. %s", count++, car.getName()));
+        }
 
         return 0;
     }

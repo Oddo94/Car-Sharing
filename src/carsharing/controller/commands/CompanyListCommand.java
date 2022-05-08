@@ -25,37 +25,51 @@ public class CompanyListCommand implements Command {
     @Override
     public int execute() {
         List<CompanyDto> companyList = receiver.getCompanyList();
-
+        int count = 1;
         //Prints the list of retrieved companies
         if(companyList.size() > 0) {
+
             System.out.println("\nChoose the company:");
-            companyList.stream()
-                    .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
+//            companyList.stream()
+//                    .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
+            for(CompanyDto company : companyList) {
+                System.out.println(String.format("%d. %s", count++, company.getName()));
+            }
+            //Displays the back option
+            System.out.println("0. Back");
+            //Resets the item counter
+            count = 1;
         } else {
             System.out.println("The company list is empty!");
+            return -1;
         }
 
         //Gets the id of the company as input
         String input = scanner.nextLine().replace("> ", "").trim();
+        //Checks if user chose the 'Back' command
+        if ("0".equals(input)) {
+            return -1;
+        }
 
         if(!InputChecker.isDigit(input)) {
             return -1;
         }
 
         int companyId = Integer.parseInt(input);
-
-        //String companyName = companyList.get(companyId).getName();
-        CompanyDto selectedCompany = companyList
-                .stream()
-                .filter(companyDto -> companyDto.getId() == companyId)
-                .findAny()
-                .orElse(null);
-
-        String companyName = selectedCompany != null ? selectedCompany.getName() : "Unknown company";
+        //Adjusts ID to match the zero index system used by the ArrayList
+        --companyId;
+        String companyName = companyList.get(companyId).getName();
+//        CompanyDto selectedCompany = companyList
+//                .stream()
+//                .filter(companyDto -> companyDto.getId() == companyId)
+//                .findAny()
+//                .orElse(null);
+//
+//        String companyName = selectedCompany != null ? selectedCompany.getName() : "Unknown company";
 
         while(true) {
         Command companyMenuCommand = new CompanyMenuCommand(receiver, companyName, isFirstDisplay);
-        //invoker used to execute all the commands inside the method
+        //Invoker used to execute all the commands inside the method
         Invoker commandInvoker = new Invoker();
 
         commandInvoker.setCommand(companyMenuCommand);
