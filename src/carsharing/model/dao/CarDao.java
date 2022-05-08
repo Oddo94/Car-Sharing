@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarDao implements Dao<Car> {
-    private String getCompanyCarListStatement = "SELECT CR.ID, CR.NAME FROM COMPANY CMP" +
-            "INNER JOIN CAR CR ON CMP.ID = CR.ID" +
-            "WHERE CMP.NAME = ?";
+    private String getCompanyCarListStatement = "SELECT CAR.ID, CAR.NAME FROM COMPANY " +
+            "INNER JOIN CAR ON COMPANY.ID = CAR.COMPANY_ID " +
+            "WHERE COMPANY.NAME = ?";
 
     private String createCarStatement = "INSERT INTO CAR(NAME, COMPANY_ID) VALUES(?, (SELECT ID FROM COMPANY WHERE NAME = ?))";
     private Connection databaseConnection;
@@ -30,7 +30,7 @@ public class CarDao implements Dao<Car> {
 
     @Override
     public List<Car> getAll() {
-        List<Car> carsList = new ArrayList<>();
+        List<Car> carList = new ArrayList<>();
 
         try(PreparedStatement preparedStatement = databaseConnection.prepareStatement(getCompanyCarListStatement)) {
             preparedStatement.setString(1, companyName);
@@ -42,14 +42,14 @@ public class CarDao implements Dao<Car> {
                 String carName = resultSet.getString(2);
 
                 Car car = new Car(id, carName);
-                carsList.add(car);
+                carList.add(car);
             }
 
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
 
-        return null;
+        return carList;
     }
 
     @Override

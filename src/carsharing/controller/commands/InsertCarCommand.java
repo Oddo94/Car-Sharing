@@ -19,11 +19,15 @@ public class InsertCarCommand implements Command {
 
     @Override
     public int execute() {
-        System.out.println("Enter the car name: \n");
+        System.out.println("\nEnter the car name:");
         String carName = scanner.nextLine().replace("> ", "").trim();
         Car car = new Car(carName);
 
         int executionResult = receiver.insertCar(car, companyName);
+
+        if(executionResult == 0) {
+            System.out.println("The car was added!");
+        }
 
         return executionResult;
     }

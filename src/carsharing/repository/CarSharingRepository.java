@@ -8,6 +8,7 @@ import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,9 +47,13 @@ public class CarSharingRepository {
     public List<CarDto> getAllCompanyCars(String companyName) {
         CarDao carDao = new CarDao(databaseConnection, companyName);
 
-        List<Car> carsList = carDao.getAll();
+        List<Car> carList = carDao.getAll();
 
-        List<CarDto> resultList = carsList
+        if(carList.size() == 0) {
+            return new ArrayList<CarDto>();
+        }
+
+        List<CarDto> resultList = carList
                 .stream()
                 .map(car -> new CarDto(car.getId(), car.getName()))
                 .sorted(Comparator.comparing(carDto -> carDto.getId()))

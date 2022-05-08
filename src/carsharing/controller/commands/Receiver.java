@@ -30,8 +30,15 @@ public class Receiver {
         return companiesList;
     }
 
-    public int displayCompanyMenu(String companyName) {
-        String companyMenu = String.format("\n'%s' company\n1. Car list\n2. Create a car\n0. Back", companyName);
+    public int displayCompanyMenu(String companyName, boolean isFirstDisplay) {
+        String companyMenu;
+        if(isFirstDisplay) {
+            companyMenu = String.format("\n'%s' company\n1. Car list\n2. Create a car\n0. Back", companyName);
+        } else {
+            companyMenu = String.format("\n1. Car list\n2. Create a car\n0. Back", companyName);
+        }
+        //String companyMenu = String.format("\n'%s' company\n1. Car list\n2. Create a car\n0. Back", companyName);
+
         System.out.println(companyMenu);
 
         return 0;
@@ -70,9 +77,15 @@ public class Receiver {
     }
 
     public int displayCompanyCars(String companyName) {
-        List<CarDto> carsList = repository.getAllCompanyCars(companyName);
+        List<CarDto> carList = repository.getAllCompanyCars(companyName);
 
-        carsList
+        if(carList.size() == 0) {
+            System.out.println("\nThe car list is empty!");
+            return -1;
+        }
+
+        System.out.println("\nCar list:");
+        carList
                 .stream()
                 .forEach(carDto -> System.out.println(String.format("%d. %s", carDto.getId(), carDto.getName())));
 

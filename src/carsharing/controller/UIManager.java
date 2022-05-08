@@ -18,19 +18,27 @@ public class UIManager {
         Scanner scanner = new Scanner(System.in);
 
         GENERAL_MENU: while(true) {
-            displayMenu(MenuType.GENERAL_MENU);
-            String input = scanner.nextLine().replace("> ", "").trim();
-
-            if(!InputChecker.isDigit(input)) {
-                return;
-            }
-            int commandValue = Integer.parseInt(input);
+//            displayMenu(MenuType.GENERAL_MENU);
+//            String input = scanner.nextLine().replace("> ", "").trim();
+//
+//            if(!InputChecker.isDigit(input)) {
+//                return;
+//            }
+//            int commandValue = Integer.parseInt(input);
 
             Connection databaseConnection = DatabaseManager.getDatabaseConnection();
             CarSharingRepository repository = new CarSharingRepository(databaseConnection);
 
             Receiver commandReceiver = new Receiver(repository);
             Invoker commandInvoker = new Invoker();
+
+            commandReceiver.displayMenu(MenuType.GENERAL_MENU);
+            String input = scanner.nextLine().replace("> ", "").trim();
+
+            if(!InputChecker.isDigit(input)) {
+                return;
+            }
+            int commandValue = Integer.parseInt(input);
 
             int executionResult;
 
@@ -53,6 +61,7 @@ public class UIManager {
                             executionResult = commandInvoker.executeCommand();
                             break;
 
+
                         case 2:
                             Command insertCompanyCommand = new InsertCompanyCommand(commandReceiver, scanner);
                             commandInvoker.setCommand(insertCompanyCommand);
@@ -61,7 +70,7 @@ public class UIManager {
 
                         case 0:
                             //Goes back to general menu
-                            System.out.println();
+                            //System.out.println();
                             break MANAGER_MENU;
                         default:
                             break;
