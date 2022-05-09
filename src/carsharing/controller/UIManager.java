@@ -5,6 +5,7 @@ import carsharing.database.DatabaseManager;
 import carsharing.model.dto.CompanyDto;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
+import carsharing.utils.InputChecker;
 
 import java.sql.Connection;
 import java.util.Scanner;
@@ -17,19 +18,19 @@ public class UIManager {
         Scanner scanner = new Scanner(System.in);
 
         GENERAL_MENU: while(true) {
-            displayMenu(MenuType.GENERAL_MENU);
-            String input = scanner.nextLine().replace("> ", "").trim();
-
-            if(!isDigit(input)) {
-                return;
-            }
-            int commandValue = Integer.parseInt(input);
-
             Connection databaseConnection = DatabaseManager.getDatabaseConnection();
             CarSharingRepository repository = new CarSharingRepository(databaseConnection);
 
             Receiver commandReceiver = new Receiver(repository);
             Invoker commandInvoker = new Invoker();
+
+            commandReceiver.displayMenu(MenuType.GENERAL_MENU);
+            String input = scanner.nextLine().replace("> ", "").trim();
+
+            if(!InputChecker.isDigit(input)) {
+                return;
+            }
+            int commandValue = Integer.parseInt(input);
 
             int executionResult;
 
@@ -41,16 +42,17 @@ public class UIManager {
 
                     input = scanner.nextLine().replace("> ", "").trim();
 
-                    if (!isDigit(input)) {
+                    if (!InputChecker.isDigit(input)) {
                         return;
                     }
                     commandValue = Integer.parseInt(input);
                     switch (commandValue) {
                         case 1:
-                            Command displayCompaniesCommand = new CompanyListCommand(commandReceiver);
+                            Command displayCompaniesCommand = new CompanyListCommand(commandReceiver, scanner);
                             commandInvoker.setCommand(displayCompaniesCommand);
                             executionResult = commandInvoker.executeCommand();
                             break;
+
 
                         case 2:
                             Command insertCompanyCommand = new InsertCompanyCommand(commandReceiver, scanner);
@@ -60,7 +62,6 @@ public class UIManager {
 
                         case 0:
                             //Goes back to general menu
-                            System.out.println();
                             break MANAGER_MENU;
                         default:
                             break;
@@ -94,18 +95,6 @@ public class UIManager {
         }
 
         System.out.println(menu);
-
-    }
-
-    private boolean isDigit(String input) {
-        if(input == null) {
-            return false;
-        }
-
-        Pattern pattern = Pattern.compile("^\\d$");
-        Matcher matcher = pattern.matcher(input);
-
-        return matcher.matches();
 
     }
 }
