@@ -19,14 +19,6 @@ public class Receiver {
     public List<CompanyDto> getCompanyList() {
         List<CompanyDto> companiesList  = repository.getAllCompanies();
 
-//        if(companiesList.size() > 0) {
-//            System.out.println("\nChoose a company:");
-//            companiesList.stream()
-//                    .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
-//        } else {
-//            System.out.println("The company list is empty!");
-//        }
-
         return companiesList;
     }
 
@@ -37,7 +29,6 @@ public class Receiver {
         } else {
             companyMenu = String.format("\n1. Car list\n2. Create a car\n0. Back", companyName);
         }
-        //String companyMenu = String.format("\n'%s' company\n1. Car list\n2. Create a car\n0. Back", companyName);
 
         System.out.println(companyMenu);
 
@@ -86,9 +77,7 @@ public class Receiver {
         }
 
         System.out.println("\nCar list:");
-//        carList
-//                .stream()
-//                .forEach(carDto -> System.out.println(String.format("%d. %s", carDto.getId(), carDto.getName())));
+
         for(CarDto car : carList) {
             System.out.println(String.format("%d. %s", count++, car.getName()));
         }

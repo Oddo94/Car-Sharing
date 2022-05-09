@@ -6,13 +6,11 @@ import java.util.Scanner;
 
 public class InsertCarCommand implements Command {
     private Receiver receiver;
-    //private Car car;
     private Scanner scanner;
     private String companyName;
 
     public InsertCarCommand(Receiver receiver, Scanner scanner, String companyName) {
         this.receiver = receiver;
-        //this.car = car;
         this.scanner = scanner;
         this.companyName = companyName;
     }

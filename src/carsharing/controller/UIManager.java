@@ -18,14 +18,6 @@ public class UIManager {
         Scanner scanner = new Scanner(System.in);
 
         GENERAL_MENU: while(true) {
-//            displayMenu(MenuType.GENERAL_MENU);
-//            String input = scanner.nextLine().replace("> ", "").trim();
-//
-//            if(!InputChecker.isDigit(input)) {
-//                return;
-//            }
-//            int commandValue = Integer.parseInt(input);
-
             Connection databaseConnection = DatabaseManager.getDatabaseConnection();
             CarSharingRepository repository = new CarSharingRepository(databaseConnection);
 
@@ -70,7 +62,6 @@ public class UIManager {
 
                         case 0:
                             //Goes back to general menu
-                            //System.out.println();
                             break MANAGER_MENU;
                         default:
                             break;

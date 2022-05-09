@@ -37,22 +37,6 @@ public class DatabaseManager {
         } else {
             setDatabaseName(defaultDatabaseName);
         }
-
-//        String tableName = "COMPANY";
-//        DatabaseOperations databaseOperations = new DatabaseOperations(getDatabaseConnection());
-//
-//        int dropResult;
-//        if (dropExistingTable) {
-//            //Drops the existing table
-//            dropResult = databaseOperations.dropTable(tableName);
-//        }
-//
-//        String createTableStatement = "CREATE TABLE IF NOT EXISTS COMPANY(" +
-//                "ID INT(10) IDENTITY NOT NULL PRIMARY KEY," +
-//                "NAME VARCHAR(50) NOT NULL UNIQUE)";
-//
-//        //Creates a new table if it doesn't already exist
-//        int creationResult = databaseOperations.createTable(createTableStatement);
     }
 
     public static int createTableStructure() {

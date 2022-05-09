@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class InsertCompanyCommand implements Command {
     private Receiver receiver;
-    //private CompanyDto companyDto;
     private Scanner scanner;
 
     public InsertCompanyCommand(Receiver receiver, Scanner scanner) {

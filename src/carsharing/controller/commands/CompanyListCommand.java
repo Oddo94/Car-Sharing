@@ -1,9 +1,6 @@
 package carsharing.controller.commands;
 
-import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
-import carsharing.model.enums.MenuType;
-import carsharing.repository.CarSharingRepository;
 import carsharing.utils.InputChecker;
 
 import java.util.List;
@@ -26,12 +23,10 @@ public class CompanyListCommand implements Command {
     public int execute() {
         List<CompanyDto> companyList = receiver.getCompanyList();
         int count = 1;
-        //Prints the list of retrieved companies
         if(companyList.size() > 0) {
 
             System.out.println("\nChoose the company:");
-//            companyList.stream()
-//                    .forEach(companyDto -> System.out.println(String.format("%d. %s", companyDto.getId(), companyDto.getName())));
+
             for(CompanyDto company : companyList) {
                 System.out.println(String.format("%d. %s", count++, company.getName()));
             }
@@ -59,13 +54,6 @@ public class CompanyListCommand implements Command {
         //Adjusts ID to match the zero index system used by the ArrayList
         --companyId;
         String companyName = companyList.get(companyId).getName();
-//        CompanyDto selectedCompany = companyList
-//                .stream()
-//                .filter(companyDto -> companyDto.getId() == companyId)
-//                .findAny()
-//                .orElse(null);
-//
-//        String companyName = selectedCompany != null ? selectedCompany.getName() : "Unknown company";
 
         while(true) {
         Command companyMenuCommand = new CompanyMenuCommand(receiver, companyName, isFirstDisplay);
