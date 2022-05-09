@@ -61,7 +61,6 @@ public class UIManager {
                             break;
 
                         case 0:
-                            //Goes back to general menu
                             break MANAGER_MENU;
                         default:
                             break;

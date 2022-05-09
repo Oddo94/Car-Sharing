@@ -10,7 +10,6 @@ public class InsertCompanyCommand implements Command {
 
     public InsertCompanyCommand(Receiver receiver, Scanner scanner) {
         this.receiver = receiver;
-        //this.companyDto = companyDto;
         this.scanner = scanner;
     }
 

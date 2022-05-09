@@ -30,6 +30,7 @@ public class Receiver {
             companyMenu = String.format("\n1. Car list\n2. Create a car\n0. Back", companyName);
         }
 
+
         System.out.println(companyMenu);
 
         return 0;

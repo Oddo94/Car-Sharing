@@ -55,13 +55,21 @@ public class DatabaseManager {
                 "PRIMARY KEY(ID)," +
                 "FOREIGN KEY(COMPANY_ID) REFERENCES COMPANY(ID))";
 
+        String createCustomerTableStatement = "CREATE TABLE IF NOT EXISTS CUSTOMER(" +
+                "ID INT(10) NOT NULL AUTO_INCREMENT," +
+                "NAME VARCHAR(50) NOT NULL UNIQUE," +
+                "RENTED_CAR_ID INT(10) DEFAULT NULL," +
+                "PRIMARY KEY(ID),\n" +
+                "FOREIGN KEY(RENTED_CAR_ID) REFERENCES CAR(ID))";
+
 
         //Creates a new table if it doesn't already exist
         int companyTblCreationResult = databaseOperations.createTable(createCompanyTableStatement);
         int carTblCreationResult = databaseOperations.createTable(createCarTableStatement);
+        int customerTblCreationResult = databaseOperations.createTable(createCustomerTableStatement);
 
 
-        if(companyTblCreationResult == -1 || carTblCreationResult == -1) {
+        if(companyTblCreationResult == -1 || carTblCreationResult == -1 || customerTblCreationResult == -1) {
             return -1;
         }
 
