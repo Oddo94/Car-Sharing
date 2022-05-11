@@ -1,8 +1,10 @@
 package carsharing.controller.commands;
 
 import carsharing.model.Car;
+import carsharing.model.Customer;
 import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
+import carsharing.model.dto.CustomerDto;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
 
@@ -42,11 +44,15 @@ public class Receiver {
         switch(menuType) {
 
             case GENERAL_MENU:
-                menu = "1. Log in as a manager\n0. Exit";
+                menu = "1. Log in as a manager\n2.Log in as customer\n3.Create a customer\n0. Exit";
                 break;
 
             case MANAGER_MENU:
                 menu = "1. Company list\n2. Create a company\n0. Back";
+                break;
+
+            case CUSTOMER_MENU:
+                menu = "1. Rent a car\n2.Return a rented car\n3.My rented car\n0.Back";
                 break;
 
             default:
@@ -90,6 +96,29 @@ public class Receiver {
         int executionResult = repository.insertCar(car, companyName);
 
         return executionResult;
+    }
+
+    public List<Customer> getCustomerList() {
+        List<Customer> customerList = repository.getAllCustomers();
+
+//        int count = 1;
+//        if(customerList.size() == 0) {
+//            System.out.println("The customer list is empty!");
+//            return -1;
+//        }
+//
+//        System.out.println("\nChoose a customer:");
+//        for(CustomerDto customer : customerList) {
+//            System.out.println(String.format("%d. %s", count++, customer.getName()));
+//        }
+
+        return customerList;
+    }
+
+    public int insertCustomer(Customer customer) {
+        int insertionResult = repository.insertCustomer(customer);
+
+        return insertionResult;
     }
 
 }
