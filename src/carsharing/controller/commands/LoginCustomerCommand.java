@@ -9,18 +9,24 @@ import java.util.Scanner;
 public class LoginCustomerCommand implements Command {
     private Receiver receiver;
     private Scanner scanner;
+    private Invoker commandInvoker;
 
 
     public LoginCustomerCommand(Receiver receiver, Scanner scanner) {
         this.receiver = receiver;
         this.scanner = scanner;
+        commandInvoker = new Invoker();
     }
 
     @Override
     public int execute() {
         List<Customer> customerList = receiver.getCustomerList();
 
-        int displayResult = displayCustomerList(customerList);
+        Command customerListCommand = new CustomerListCommand(receiver);
+        commandInvoker.setCommand(customerListCommand);
+        int displayResult = commandInvoker.executeCommand();
+        //int displayResult = displayCustomerList(customerList);
+
         //Returns if the customer list is empty
         if (displayResult == -1) {
             return -1;
@@ -40,7 +46,7 @@ public class LoginCustomerCommand implements Command {
                 String customerName = customerList.get(customerIndex).getName();
 
 
-                Invoker commandInvoker = new Invoker();
+                //Invoker commandInvoker = new Invoker();
                 Command customerMenuCommand = new CustomerMenuCommand(receiver, customerName);
                 commandInvoker.setCommand(customerMenuCommand);
 
@@ -59,7 +65,7 @@ public class LoginCustomerCommand implements Command {
     private int displayCustomerList(List<Customer> customerList) {
         int count = 1;
         if (customerList.size() == 0) {
-            System.out.println("The customer list is empty!");
+            System.out.println("\nThe customer list is empty!");
             return -1;
         }
 
@@ -67,6 +73,7 @@ public class LoginCustomerCommand implements Command {
         for (Customer customer : customerList) {
             System.out.println(String.format("%d. %s", count++, customer.getName()));
         }
+        System.out.println("0. Back");
 
         return 0;
     }

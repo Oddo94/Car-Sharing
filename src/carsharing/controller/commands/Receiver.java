@@ -44,7 +44,7 @@ public class Receiver {
         switch(menuType) {
 
             case GENERAL_MENU:
-                menu = "1. Log in as a manager\n2.Log in as customer\n3.Create a customer\n0. Exit";
+                menu = "1. Log in as a manager\n2. Log in as customer\n3. Create a customer\n0. Exit";
                 break;
 
             case MANAGER_MENU:
@@ -52,7 +52,7 @@ public class Receiver {
                 break;
 
             case CUSTOMER_MENU:
-                menu = "1. Rent a car\n2.Return a rented car\n3.My rented car\n0.Back";
+                menu = "1. Rent a car\n2. Return a rented car\n3. My rented car\n0. Back";
                 break;
 
             default:

@@ -27,7 +27,7 @@ public class UIManager {
             commandReceiver.displayMenu(MenuType.GENERAL_MENU);
             String input = scanner.nextLine().replace("> ", "").trim();
 
-            if(!InputChecker.isDigit(input)) {
+            if (!InputChecker.isDigit(input)) {
                 return;
             }
             int commandValue = Integer.parseInt(input);
@@ -35,7 +35,8 @@ public class UIManager {
             int executionResult;
 
             if (commandValue == 1) {
-                MANAGER_MENU: while (true) {
+                MANAGER_MENU:
+                while (true) {
                     Command loginManagerCommand = new LoginManagerCommand(commandReceiver);
                     commandInvoker.setCommand(loginManagerCommand);
                     executionResult = commandInvoker.executeCommand();
@@ -68,6 +69,15 @@ public class UIManager {
                     }
 
                 }
+            } else if (commandValue == 2) {
+                Command loginCustomerCommand = new LoginCustomerCommand(commandReceiver, scanner);
+                commandInvoker.setCommand(loginCustomerCommand);
+                commandInvoker.executeCommand();
+
+            } else if(commandValue == 3) {
+                Command insertCustomerCommand = new InsertCustomerCommand(commandReceiver,scanner);
+                commandInvoker.setCommand(insertCustomerCommand);
+                commandInvoker.executeCommand();
             } else {
                 //Terminates the program
                 break GENERAL_MENU;

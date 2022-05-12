@@ -31,7 +31,7 @@ public class CustomerDao implements Dao<Customer>{
 
             while(resultSet.next()) {
                 Customer customer = new Customer();
-                customer.setName(resultSet.getString(1));
+                customer.setName(resultSet.getString(2));
 
                 customerList.add(customer);
             }
@@ -49,6 +49,7 @@ public class CustomerDao implements Dao<Customer>{
         }
 
         try (PreparedStatement preparedStatement = databaseConnection.prepareStatement(insertCustomerStatement)) {
+            preparedStatement.setString(1, customer.getName());
             preparedStatement.execute();
 
             return 0;
