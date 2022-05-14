@@ -22,7 +22,7 @@ public class LoginCustomerCommand implements Command {
     public int execute() {
         List<Customer> customerList = receiver.getCustomerList();
 
-        Command customerListCommand = new CustomerListCommand(receiver);
+        Command customerListCommand = new CustomerListCommand(receiver, scanner);
         commandInvoker.setCommand(customerListCommand);
         int displayResult = commandInvoker.executeCommand();
         //int displayResult = displayCustomerList(customerList);
@@ -45,9 +45,8 @@ public class LoginCustomerCommand implements Command {
 
                 String customerName = customerList.get(customerIndex).getName();
 
-
                 //Invoker commandInvoker = new Invoker();
-                Command customerMenuCommand = new CustomerMenuCommand(receiver, customerName);
+                Command customerMenuCommand = new CustomerMenuCommand(receiver, scanner, customerName);
                 commandInvoker.setCommand(customerMenuCommand);
 
                 //Executes the command that will display the rental menu

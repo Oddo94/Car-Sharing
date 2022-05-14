@@ -2,10 +2,9 @@ package carsharing.repository;
 
 import carsharing.model.Car;
 import carsharing.model.Company;
+import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
-import carsharing.model.dao.CarDao;
-import carsharing.model.dao.CompanyDao;
-import carsharing.model.dao.CustomerDao;
+import carsharing.model.dao.*;
 import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
 import carsharing.model.dto.CustomerDto;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 public class CarSharingRepository {
 
     private Connection databaseConnection;
+    private Dao dao;
 
     public CarSharingRepository(Connection databaseConnection) {
         this.databaseConnection = databaseConnection;
@@ -94,5 +94,12 @@ public class CarSharingRepository {
         int insertionResult = customerDao.save(customer);
 
         return insertionResult;
+    }
+
+    public List<CompanyCar> getCarListForCompany(String companyName) {
+        dao = new CompanyCarDao(databaseConnection, companyName);
+        List<CompanyCar> companyCarList = dao.getAll();
+
+        return companyCarList;
     }
 }

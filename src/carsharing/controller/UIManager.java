@@ -78,6 +78,7 @@ public class UIManager {
                 Command insertCustomerCommand = new InsertCustomerCommand(commandReceiver,scanner);
                 commandInvoker.setCommand(insertCustomerCommand);
                 commandInvoker.executeCommand();
+
             } else {
                 //Terminates the program
                 break GENERAL_MENU;

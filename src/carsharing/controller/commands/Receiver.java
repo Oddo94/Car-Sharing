@@ -1,6 +1,7 @@
 package carsharing.controller.commands;
 
 import carsharing.model.Car;
+import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
 import carsharing.model.dto.CarDto;
 import carsharing.model.dto.CompanyDto;
@@ -119,6 +120,12 @@ public class Receiver {
         int insertionResult = repository.insertCustomer(customer);
 
         return insertionResult;
+    }
+
+    public List<CompanyCar> getCompanyCars(String companyName) {
+        List<CompanyCar> companyCarList = repository.getCarListForCompany(companyName);
+
+        return companyCarList;
     }
 
 }
