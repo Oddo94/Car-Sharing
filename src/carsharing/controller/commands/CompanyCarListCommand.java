@@ -41,7 +41,7 @@ public class CompanyCarListCommand implements Command {
         int count = 1;
         System.out.println("Choose a car:\n");
         for(CompanyCar companyCar : companyCarList) {
-            System.out.println(String.format("%d. %s", count++, companyCar.getCarName()));
+            System.out.println(String.format("%d. %s", count++, companyCar.getName()));
         }
         System.out.println("0. Back");
 

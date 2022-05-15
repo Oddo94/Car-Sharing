@@ -16,7 +16,10 @@ public class CompanyCarDao implements Dao<CompanyCar> {
     private String getCompanyCars = "SELECT COMPANY.NAME, CAR.NAME " +
                                     "FROM COMPANY " +
                                     "INNER JOIN CAR ON COMPANY.ID = CAR.COMPANY_ID " +
-                                    "WHERE COMPANY.NAME = ?";
+                                    "WHERE COMPANY.NAME = ? ";
+                                    //"AND CAR.ID NOT IN (SELECT RENTED_CAR_ID FROM CUSTOMER)";
+
+
 
     public CompanyCarDao(Connection databaseConnection, String companyName) {
         this.databaseConnection = databaseConnection;
@@ -25,6 +28,11 @@ public class CompanyCarDao implements Dao<CompanyCar> {
     @Override
     public CompanyCar get(long id) {
         return null;
+    }
+
+    @Override
+    public int getItemId(String itemName) {
+        return -1;
     }
 
     @Override

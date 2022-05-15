@@ -24,17 +24,18 @@ public class CarSharingRepository {
         this.databaseConnection = databaseConnection;
     }
 
-    public List<CompanyDto> getAllCompanies() {
+    public List<Company> getAllCompanies() {
         CompanyDao companyDao = new CompanyDao(databaseConnection);
 
-        List<Company> companiesList = companyDao.getAll();
+        List<Company> companyList = companyDao.getAll();
 
-        List<CompanyDto> resultList = companiesList.stream()
-                .map(company -> new CompanyDto(company.getId(), company.getName()))
-                .sorted(Comparator.comparing(companyDto -> companyDto.getId()))
-                .collect(Collectors.toList());
+//        List<CompanyDto> resultList = companiesList.stream()
+//                .map(company -> new CompanyDto(company.getId(), company.getName()))
+//                .sorted(Comparator.comparing(companyDto -> companyDto.getId()))
+//                .collect(Collectors.toList());
 
-        return resultList;
+       // return resultList;
+        return companyList;
     }
 
     public int insertCompany(CompanyDto companyDto) {
@@ -74,6 +75,22 @@ public class CarSharingRepository {
         return insertionResult;
     }
 
+    public int setRentedCarForCustomer(Customer customer) {
+        Dao customerDao = new CustomerDao(databaseConnection);
+
+       int carRentalResult =  customerDao.update(0L, customer);
+
+       return carRentalResult;
+    }
+
+    public int getCarId(String carName) {
+        Dao carDao = new CarDao(databaseConnection);
+
+        int carId = carDao.getItemId(carName);
+
+        return carId;
+    }
+
     public List<Customer> getAllCustomers() {
         CustomerDao customerDao = new CustomerDao(databaseConnection);
 
@@ -102,4 +119,5 @@ public class CarSharingRepository {
 
         return companyCarList;
     }
+
 }

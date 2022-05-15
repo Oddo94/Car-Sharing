@@ -1,5 +1,9 @@
 package carsharing.controller.commands;
 
+import carsharing.model.Company;
+import carsharing.model.CompanyCar;
+import carsharing.model.Customer;
+import carsharing.model.Model;
 import carsharing.model.dto.CompanyDto;
 import carsharing.model.enums.MenuType;
 import carsharing.utils.InputChecker;
@@ -10,21 +14,19 @@ import java.util.Scanner;
 public class RentCarCommand implements Command {
     private Receiver receiver;
     private Scanner scanner;
+    private String customerName;
     private Invoker commandInvoker;
 
-    public RentCarCommand(Receiver receiver, Scanner scanner) {
+    public RentCarCommand(Receiver receiver, Scanner scanner, String customerName) {
         this.receiver = receiver;
         this.scanner = scanner;
+        this.customerName = customerName;
         commandInvoker = new Invoker();
     }
     @Override
     public int execute() {
-//        Command companyListCommand = new CompanyListCommand(receiver, scanner);
-//        commandInvoker.setCommand(companyListCommand);
-//        commandInvoker.executeCommand();
-
-        List<CompanyDto> companyList = receiver.getCompanyList();
-        int companyDisplayResult = displayCompanies(companyList);
+        List<Company> companyList = receiver.getCompanyList();
+        int companyDisplayResult = displayElements(companyList, "company");
 
         if(companyDisplayResult == -1) {
             return -1;
@@ -42,33 +44,74 @@ public class RentCarCommand implements Command {
             return -1;
         }
 
-        int companyIndex = --commandValue;
+        //int companyIndex = --commandValue;
 
-        String companyName = companyList.get(companyIndex).getName();
+        //String companyName = companyList.get(companyIndex).getName();
+        String companyName = getElementName(companyList, commandValue);
 
-        Command companyCarListCommand = new CompanyCarListCommand(receiver, scanner, companyName);
-        commandInvoker.setCommand(companyCarListCommand);
-        int companyCarDisplayResult = commandInvoker.executeCommand();
+//        Command companyCarListCommand = new CompanyCarListCommand(receiver, scanner, companyName);
+//        commandInvoker.setCommand(companyCarListCommand);
+//        int companyCarDisplayResult = commandInvoker.executeCommand();
+        List<CompanyCar> companyCarList = receiver.getCompanyCars(companyName);
+        int companyCarDisplayResult = displayElements(companyCarList, "car");
 
+        input = scanner.nextLine().replaceAll(">\\s?", "").trim();
 
+        if(!InputChecker.isDigit(input)) {
+            return -1;
+        }
 
+        commandValue = Integer.parseInt(input);
+        //Back command
+        if(commandValue == 0) {
+            return -1;
+        }
 
+        String carName = getElementName(companyCarList, commandValue);
 
+        int carId = receiver.getCarId(carName);
 
+         Customer customer = new Customer(0, customerName, carId);
+
+         int rentCarExecutionResult = receiver.rentCar(customer);
+
+         if(rentCarExecutionResult == 0) {
+             System.out.println(String.format("You rented '%s'", carName));
+             return 0;
+         } else if(rentCarExecutionResult == -1) {
+             System.out.println("You've already rented a car!");
+             return -1;
+         }
 
         return 0;
     }
 
-    private int displayCompanies(List<CompanyDto> companyList) {
-        if(companyList.size() == 0) {
-            System.out.println("The company list is empty!");
+    private String getElementName(List<? extends Model> inputList, int itemPosition) {
+        if(inputList.size() == 0) {
+            return null;
+        }
+        int itemIndex = --itemPosition;
+
+        if(itemIndex < 0 || itemIndex > inputList.size() - 1) {
+            return null;
+        }
+
+        String itemName = inputList.get(itemIndex).getName();
+
+        return itemName;
+
+    }
+
+    private int displayElements(List<? extends Model> itemList, String itemName) {
+        if(itemList.size() == 0) {
+            System.out.println(String.format("The %s list is empty!", itemName));
             return -1;
         }
 
         int count = 1;
-        System.out.println("Choose a company:\n");
-        for(CompanyDto company : companyList) {
-            System.out.println(String.format("%d. %s", count++, company.getName()));
+        System.out.println(String.format("Choose a %s:\n", itemName));
+        for(Model model : itemList) {
+            System.out.println(String.format("%d. %s", count++, model.getName()));
         }
         System.out.println("0. Back");
 

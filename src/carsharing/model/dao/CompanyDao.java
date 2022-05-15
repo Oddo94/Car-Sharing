@@ -24,6 +24,11 @@ public class CompanyDao implements Dao<Company>{
     }
 
     @Override
+    public int getItemId(String itemName) {
+        return -1;
+    }
+
+    @Override
     public List<Company> getAll() {
         List<Company> companiesList = new ArrayList<>();
 

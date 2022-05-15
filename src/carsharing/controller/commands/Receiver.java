@@ -1,6 +1,7 @@
 package carsharing.controller.commands;
 
 import carsharing.model.Car;
+import carsharing.model.Company;
 import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
 import carsharing.model.dto.CarDto;
@@ -19,8 +20,8 @@ public class Receiver {
         this.repository = repository;
     }
 
-    public List<CompanyDto> getCompanyList() {
-        List<CompanyDto> companiesList  = repository.getAllCompanies();
+    public List<Company> getCompanyList() {
+        List<Company> companiesList  = repository.getAllCompanies();
 
         return companiesList;
     }
@@ -99,6 +100,18 @@ public class Receiver {
         return executionResult;
     }
 
+    public int getCarId(String carName) {
+        int carId = repository.getCarId(carName);
+
+        return carId;
+    }
+
+    public int rentCar(Customer customer) {
+        int rentalResult = repository.setRentedCarForCustomer(customer);
+
+        return rentalResult;
+    }
+
     public List<Customer> getCustomerList() {
         List<Customer> customerList = repository.getAllCustomers();
 
@@ -127,5 +140,6 @@ public class Receiver {
 
         return companyCarList;
     }
+
 
 }

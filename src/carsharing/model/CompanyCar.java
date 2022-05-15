@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompanyCar {
+public class CompanyCar implements Model {
     String companyName;
-    String carName;
+    String name;
 }

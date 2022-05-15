@@ -39,7 +39,7 @@ public class CustomerMenuCommand implements Command {
             switch (commandNumber) {
 
                 case 1:
-                    Command rentCarCommand = new RentCarCommand(receiver, scanner);
+                    Command rentCarCommand = new RentCarCommand(receiver, scanner, customerName);
                     commandInvoker.setCommand(rentCarCommand);
                     commandInvoker.executeCommand();
                     break;

@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Customer implements Model {
     private int id;
     private String name;
+    private int rentedCarId;
 
     public Customer(String name) {
         this.name = name;
