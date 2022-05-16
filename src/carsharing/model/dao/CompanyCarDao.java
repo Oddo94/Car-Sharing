@@ -13,11 +13,21 @@ public class CompanyCarDao implements Dao<CompanyCar> {
     private Connection databaseConnection;
     private String companyName;
 
+    //Add condition to filter the rented car from the displayed list
     private String getCompanyCars = "SELECT COMPANY.NAME, CAR.NAME " +
                                     "FROM COMPANY " +
-                                    "INNER JOIN CAR ON COMPANY.ID = CAR.COMPANY_ID " +
-                                    "WHERE COMPANY.NAME = ? ";
-                                    //"AND CAR.ID NOT IN (SELECT RENTED_CAR_ID FROM CUSTOMER)";
+                                    "INNER JOIN CAR ON CAR.COMPANY_ID = COMPANY.ID " +
+                                    "WHERE COMPANY.NAME = ? " +
+                                    "AND CAR.ID NOT IN (SELECT RENTED_CAR_ID FROM CUSTOMER WHERE RENTED_CAR_ID IS NOT NULL)";
+
+//    private String getCompanyCars = "      SELECT car.id, car.name, car.company_id " +
+//            " FROM car LEFT JOIN customer" +
+//            "ON car.id = customer.rented_car_id" +
+//            "WHERE customer.name IS NULL";
+
+
+
+
 
 
 
@@ -48,9 +58,11 @@ public class CompanyCarDao implements Dao<CompanyCar> {
                 String companyName = resultSet.getString(1);
                 String carName = resultSet.getString(2);
 
-                CompanyCar companyCar = new CompanyCar(companyName, carName);
+                //if(rentedCarId != 0) {
+                    CompanyCar companyCar = new CompanyCar(companyName, carName);
 
-                companyCarList.add(companyCar);
+                    companyCarList.add(companyCar);
+                //}
 
             }
 

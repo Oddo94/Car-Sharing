@@ -62,7 +62,6 @@ public class DatabaseManager {
                 "PRIMARY KEY(ID)," +
                 "FOREIGN KEY(RENTED_CAR_ID) REFERENCES CAR(ID))";
 
-
         //Creates a new table if it doesn't already exist
         int companyTblCreationResult = databaseOperations.createTable(createCompanyTableStatement);
         int carTblCreationResult = databaseOperations.createTable(createCarTableStatement);

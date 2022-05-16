@@ -16,9 +16,12 @@ public class CustomerDao implements Dao<Customer>{
             "SET RENTED_CAR_ID = (SELECT ID FROM CAR WHERE NAME = ?) " +
             "WHERE NAME = ?";
     private String hasRentedCarStatement = "SELECT RENTED_CAR_ID FROM CUSTOMER WHERE NAME = ?";
-    private String setRentedCarStatement = "UPDATE CUSTOMER " +
-            "SET NAME = ?, RENTED_CAR_ID = ? " +
-            "WHERE NAME = ?";
+//    private String setRentedCarStatement = "UPDATE CUSTOMER " +
+//            "SET NAME = ?, RENTED_CAR_ID = ? " +
+//            "WHERE NAME = ?";
+private String setRentedCarStatement = "UPDATE CUSTOMER " +
+        "SET RENTED_CAR_ID = ? " +
+        "WHERE NAME = ?";
     //private String customerName;
     private String carName;
     private Connection databaseConnection;
@@ -88,16 +91,23 @@ public class CustomerDao implements Dao<Customer>{
             return -1;
         }
 
-        //Checks if the customer has already rented a car
-        if(hasRentedCar(customer.getName())) {
+        //Checks if the customer has already rented a car and if he doesn't want to return a rented car
+        if(hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
             return -1;
         }
 
         try (PreparedStatement preparedStatementUpdate = databaseConnection.prepareStatement(setRentedCarStatement)) {
 
-            preparedStatementUpdate.setString(1, customer.getName());
-            preparedStatementUpdate.setInt(2, customer.getRentedCarId());
-            preparedStatementUpdate.setString(3, customer.getName());
+            //preparedStatementUpdate.setString(1, customer.getName());
+            //Used for returning the car(null values means that the respective user hasn't rented any car)
+            if(customer.getRentedCarId() == 0) {
+                preparedStatementUpdate.setNull(1, Types.INTEGER);
+            } else {
+                //Normal car rental flow
+                preparedStatementUpdate.setInt(1, customer.getRentedCarId());
+            }
+
+            preparedStatementUpdate.setString(2, customer.getName());
 
             preparedStatementUpdate.execute();
 

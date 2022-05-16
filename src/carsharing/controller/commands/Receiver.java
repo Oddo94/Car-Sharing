@@ -141,5 +141,11 @@ public class Receiver {
         return companyCarList;
     }
 
+    public int returnRentedCar(Customer customer) {
+        int executionResult = repository.returnRentedCar(customer);
+
+        return executionResult;
+    }
+
 
 }

@@ -25,6 +25,7 @@ public class RentCarCommand implements Command {
     }
     @Override
     public int execute() {
+        //Company list display
         List<Company> companyList = receiver.getCompanyList();
         int companyDisplayResult = displayElements(companyList, "company");
 
@@ -52,6 +53,7 @@ public class RentCarCommand implements Command {
 //        Command companyCarListCommand = new CompanyCarListCommand(receiver, scanner, companyName);
 //        commandInvoker.setCommand(companyCarListCommand);
 //        int companyCarDisplayResult = commandInvoker.executeCommand();
+        //Company car list display
         List<CompanyCar> companyCarList = receiver.getCompanyCars(companyName);
         int companyCarDisplayResult = displayElements(companyCarList, "car");
 
@@ -76,7 +78,7 @@ public class RentCarCommand implements Command {
          int rentCarExecutionResult = receiver.rentCar(customer);
 
          if(rentCarExecutionResult == 0) {
-             System.out.println(String.format("You rented '%s'", carName));
+             System.out.println(String.format("\nYou rented '%s'", carName));
              return 0;
          } else if(rentCarExecutionResult == -1) {
              System.out.println("You've already rented a car!");
@@ -109,7 +111,7 @@ public class RentCarCommand implements Command {
         }
 
         int count = 1;
-        System.out.println(String.format("Choose a %s:\n", itemName));
+        System.out.println(String.format("\nChoose a %s:", itemName));
         for(Model model : itemList) {
             System.out.println(String.format("%d. %s", count++, model.getName()));
         }

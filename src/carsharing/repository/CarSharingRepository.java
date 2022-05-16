@@ -120,4 +120,10 @@ public class CarSharingRepository {
         return companyCarList;
     }
 
+    public int returnRentedCar(Customer customer) {
+        dao = new CustomerDao(databaseConnection);
+        int executionResult = dao.update(0l, customer);
+
+        return executionResult;
+    }
 }
