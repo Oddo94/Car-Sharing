@@ -1,10 +1,6 @@
 package carsharing.controller.commands;
 
 import carsharing.model.Company;
-import carsharing.model.dto.CarDto;
-import carsharing.model.dto.CompanyDto;
-import carsharing.model.enums.MenuType;
-import carsharing.repository.CarSharingRepository;
 import carsharing.utils.InputChecker;
 
 import java.util.List;

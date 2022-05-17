@@ -1,7 +1,6 @@
 package carsharing.model.dao;
 
 import carsharing.model.Company;
-import carsharing.model.dto.CompanyDto;
 
 import java.sql.*;
 import java.util.*;

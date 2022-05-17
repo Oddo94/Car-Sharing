@@ -1,6 +1,6 @@
 package carsharing.controller.commands;
 
-import carsharing.model.dto.CompanyDto;
+import carsharing.model.Company;
 
 import java.util.Scanner;
 
@@ -18,9 +18,9 @@ public class InsertCompanyCommand implements Command {
     public int execute() {
         System.out.println("\nEnter the company name:");
         String companyName = scanner.nextLine().replace("> ", "").trim();
-        CompanyDto companyDto = new CompanyDto(companyName);
+        Company company = new Company(companyName);
 
-        int executionResult = receiver.insertCompany(companyDto);
+        int executionResult = receiver.insertCompany(company);
 
         if(executionResult == 0) {
             System.out.println("The company was created!");

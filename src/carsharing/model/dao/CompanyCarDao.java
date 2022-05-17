@@ -42,11 +42,11 @@ public class CompanyCarDao implements Dao<CompanyCar> {
     }
 
     @Override
-    public CompanyCar get(String customerName) {
+    public CompanyCar get(String itemName) {
         CompanyCar companyCar = null;
 
         try(PreparedStatement preparedStatement = databaseConnection.prepareStatement(getCompanyRentedCar)) {
-            preparedStatement.setString(1, customerName);
+            preparedStatement.setString(1, itemName);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

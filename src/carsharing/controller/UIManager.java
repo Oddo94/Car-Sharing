@@ -2,28 +2,25 @@ package carsharing.controller;
 
 import carsharing.controller.commands.*;
 import carsharing.database.DatabaseManager;
-import carsharing.model.dto.CompanyDto;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
 import carsharing.utils.InputChecker;
 
 import java.sql.Connection;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UIManager {
 
     public void manageUI(String[] inputArguments) {
         Scanner scanner = new Scanner(System.in);
 
+        Connection databaseConnection = DatabaseManager.getDatabaseConnection();
+        CarSharingRepository repository = new CarSharingRepository(databaseConnection);
+
+        Receiver commandReceiver = new Receiver(repository);
+        Invoker commandInvoker = new Invoker();
+
         GENERAL_MENU: while(true) {
-            Connection databaseConnection = DatabaseManager.getDatabaseConnection();
-            CarSharingRepository repository = new CarSharingRepository(databaseConnection);
-
-            Receiver commandReceiver = new Receiver(repository);
-            Invoker commandInvoker = new Invoker();
-
             commandReceiver.displayMenu(MenuType.GENERAL_MENU);
             String input = scanner.nextLine().replace("> ", "").trim();
 

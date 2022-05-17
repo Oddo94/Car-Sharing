@@ -22,7 +22,11 @@ public class CustomerListCommand implements Command {
     public int execute() {
         List<Customer> customerList = receiver.getCustomerList();
 
-        displayCustomerList(customerList);
+        int displayResult = displayCustomerList(customerList);
+
+        if(displayResult == -1) {
+            return -1;
+        }
 
         String input = scanner.nextLine().replaceAll(">\\s?", "").trim();
 

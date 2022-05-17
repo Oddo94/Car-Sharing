@@ -4,8 +4,6 @@ import carsharing.model.Company;
 import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
 import carsharing.model.Model;
-import carsharing.model.dto.CompanyDto;
-import carsharing.model.enums.MenuType;
 import carsharing.utils.InputChecker;
 
 import java.util.List;
@@ -23,10 +21,80 @@ public class RentCarCommand implements Command {
         this.customerName = customerName;
         commandInvoker = new Invoker();
     }
+//    @Override
+//    public int execute() {
+//        //Company list display
+//        List<Company> companyList = receiver.getCompanyList();
+//        int companyDisplayResult = displayElements(companyList, "company");
+//
+//        if(companyDisplayResult == -1) {
+//            return -1;
+//        }
+//
+//        String input = scanner.nextLine().replaceAll(">\\s?", "").trim();
+//
+//        if(!InputChecker.isDigit(input)) {
+//            return -1;
+//        }
+//
+//        int commandValue = Integer.parseInt(input);
+//        //Back command
+//        if(commandValue == 0) {
+//            return -1;
+//        }
+//
+//        //int companyIndex = --commandValue;
+//
+//        //String companyName = companyList.get(companyIndex).getName();
+//        String companyName = getElementName(companyList, commandValue);
+//
+//
+//        //Company car list display
+//        List<CompanyCar> companyCarList = receiver.getCompanyCars(companyName);
+//        int companyCarDisplayResult = displayElements(companyCarList, "car");
+//
+//        input = scanner.nextLine().replaceAll(">\\s?", "").trim();
+//
+//        if(!InputChecker.isDigit(input)) {
+//            return -1;
+//        }
+//
+//        commandValue = Integer.parseInt(input);
+//        //Back command
+//        if(commandValue == 0) {
+//            return -1;
+//        }
+//
+//        String carName = getElementName(companyCarList, commandValue);
+//
+//        int carId = receiver.getCarId(carName);
+//
+//         Customer customer = new Customer(0, customerName, carId);
+//
+//         int rentCarExecutionResult = receiver.rentCar(customer);
+//
+//         if(rentCarExecutionResult == 0) {
+//             System.out.println(String.format("\nYou rented '%s'", carName));
+//             return 0;
+//         } else if(rentCarExecutionResult == -1) {
+//             System.out.println("You've already rented a car!");
+//             return -1;
+//         }
+//
+//        return 0;
+//    }
+
     @Override
     public int execute() {
+        //Returns if the user has already rented a car
+        if(receiver.hasRentedCar(customerName)) {
+            System.out.println("\nYou've already rented a car!");
+            return -1;
+        }
+
         //Company list display
         List<Company> companyList = receiver.getCompanyList();
+
         int companyDisplayResult = displayElements(companyList, "company");
 
         if(companyDisplayResult == -1) {
@@ -50,9 +118,7 @@ public class RentCarCommand implements Command {
         //String companyName = companyList.get(companyIndex).getName();
         String companyName = getElementName(companyList, commandValue);
 
-//        Command companyCarListCommand = new CompanyCarListCommand(receiver, scanner, companyName);
-//        commandInvoker.setCommand(companyCarListCommand);
-//        int companyCarDisplayResult = commandInvoker.executeCommand();
+
         //Company car list display
         List<CompanyCar> companyCarList = receiver.getCompanyCars(companyName);
         int companyCarDisplayResult = displayElements(companyCarList, "car");
@@ -73,17 +139,18 @@ public class RentCarCommand implements Command {
 
         int carId = receiver.getCarId(carName);
 
-         Customer customer = new Customer(0, customerName, carId);
+        Customer customer = new Customer(0, customerName, carId);
 
-         int rentCarExecutionResult = receiver.rentCar(customer);
+        int rentCarExecutionResult = receiver.rentCar(customer);
 
-         if(rentCarExecutionResult == 0) {
-             System.out.println(String.format("\nYou rented '%s'", carName));
-             return 0;
-         } else if(rentCarExecutionResult == -1) {
-             System.out.println("You've already rented a car!");
-             return -1;
-         }
+        if(rentCarExecutionResult == 0) {
+            System.out.println(String.format("\nYou rented '%s'", carName));
+            return 0;
+        }
+//        } else if(rentCarExecutionResult == -1) {
+//            System.out.println("You've already rented a car!");
+//            return -1;
+//        }
 
         return 0;
     }

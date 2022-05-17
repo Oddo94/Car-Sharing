@@ -4,9 +4,7 @@ import carsharing.model.Car;
 import carsharing.model.Company;
 import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
-import carsharing.model.dto.CarDto;
-import carsharing.model.dto.CompanyDto;
-import carsharing.model.dto.CustomerDto;
+import carsharing.model.dao.CustomerDao;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
 
@@ -46,7 +44,7 @@ public class Receiver {
         switch(menuType) {
 
             case GENERAL_MENU:
-                menu = "1. Log in as a manager\n2. Log in as customer\n3. Create a customer\n0. Exit";
+                menu = "1. Log in as a manager\n2. Log in as a customer\n3. Create a customer\n0. Exit";
                 break;
 
             case MANAGER_MENU:
@@ -62,22 +60,22 @@ public class Receiver {
                 return -1;
         }
 
-        System.out.println();
+        //System.out.println();
         System.out.println(menu);
 
         return 0;
 
     }
 
-    public int insertCompany(CompanyDto companyDto) {
-        int executionResult = repository.insertCompany(companyDto);
+    public int insertCompany(Company company) {
+        int executionResult = repository.insertCompany(company);
 
         return executionResult;
 
     }
 
     public int displayCompanyCars(String companyName) {
-        List<CarDto> carList = repository.getAllCompanyCars(companyName);
+        List<Car> carList = repository.getAllCompanyCars(companyName);
 
         int count = 1;
         if(carList.size() == 0) {
@@ -87,7 +85,7 @@ public class Receiver {
 
         System.out.println("\nCar list:");
 
-        for(CarDto car : carList) {
+        for(Car car : carList) {
             System.out.println(String.format("%d. %s", count++, car.getName()));
         }
 
@@ -104,12 +102,6 @@ public class Receiver {
         int carId = repository.getCarId(carName);
 
         return carId;
-    }
-
-    public int rentCar(Customer customer) {
-        int rentalResult = repository.setRentedCarForCustomer(customer);
-
-        return rentalResult;
     }
 
     public List<Customer> getCustomerList() {
@@ -141,7 +133,14 @@ public class Receiver {
         return companyCarList;
     }
 
+    public int rentCar(Customer customer) {
+        int rentalResult = repository.setRentedCarForCustomer(customer);
+
+        return rentalResult;
+    }
+
     public int returnRentedCar(Customer customer) {
+
         int executionResult = repository.returnRentedCar(customer);
 
         return executionResult;
@@ -151,6 +150,11 @@ public class Receiver {
         CompanyCar companyCar = repository.getCustomerRentedCar(customerName);
 
         return companyCar;
+    }
+
+    public boolean hasRentedCar(String customerName) {
+
+        return repository.hasRentedCar(customerName);
     }
 
 

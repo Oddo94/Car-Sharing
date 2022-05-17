@@ -1,7 +1,6 @@
 package carsharing.controller.commands;
 
 import carsharing.model.CompanyCar;
-import carsharing.model.dto.CompanyDto;
 
 import java.util.List;
 import java.util.Scanner;

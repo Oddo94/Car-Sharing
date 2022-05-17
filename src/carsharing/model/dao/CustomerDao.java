@@ -1,7 +1,6 @@
 package carsharing.model.dao;
 
 import carsharing.model.Customer;
-import carsharing.model.dto.CustomerDto;
 import lombok.AllArgsConstructor;
 
 import java.sql.*;
@@ -92,9 +91,17 @@ private String setRentedCarStatement = "UPDATE CUSTOMER " +
         }
 
         //Checks if the customer has already rented a car and if he doesn't want to return a rented car
-        if(hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
-            return -1;
-        }
+//        if(hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
+//            return -1;
+//        }
+
+
+//        if(hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
+//            //Customer has already rented a car and tries to rent another one
+//            return -1;
+//        } else if(hasRentedCar(customer.getName())) {
+//            return -1;
+//        }
 
         try (PreparedStatement preparedStatementUpdate = databaseConnection.prepareStatement(setRentedCarStatement)) {
 
@@ -125,7 +132,7 @@ private String setRentedCarStatement = "UPDATE CUSTOMER " +
         return 0;
     }
 
-    private boolean hasRentedCar(String customerName) {
+    public boolean hasRentedCar(String customerName) {
         try (PreparedStatement preparedStatementCheckRental = databaseConnection.prepareStatement(hasRentedCarStatement)
             ) {
 

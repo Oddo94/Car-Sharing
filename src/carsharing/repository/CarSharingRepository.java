@@ -5,9 +5,6 @@ import carsharing.model.Company;
 import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
 import carsharing.model.dao.*;
-import carsharing.model.dto.CarDto;
-import carsharing.model.dto.CompanyDto;
-import carsharing.model.dto.CustomerDto;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -38,32 +35,32 @@ public class CarSharingRepository {
         return companyList;
     }
 
-    public int insertCompany(CompanyDto companyDto) {
+    public int insertCompany(Company company) {
         CompanyDao companyDao = new CompanyDao(databaseConnection);
 
-        Company company = new Company(companyDto.getName());
+        //Company company = new Company(companyDto.getName());
 
         int insertionResult = companyDao.save(company);
 
         return insertionResult;
     }
 
-    public List<CarDto> getAllCompanyCars(String companyName) {
+    public List<Car> getAllCompanyCars(String companyName) {
         CarDao carDao = new CarDao(databaseConnection, companyName);
 
         List<Car> carList = carDao.getAll();
 
         if(carList.size() == 0) {
-            return new ArrayList<CarDto>();
+            return new ArrayList<Car>();
         }
 
-        List<CarDto> resultList = carList
-                .stream()
-                .map(car -> new CarDto(car.getId(), car.getName()))
-                .sorted(Comparator.comparing(carDto -> carDto.getId()))
-                .collect(Collectors.toList());
+//        List<CarDto> resultList = carList
+//                .stream()
+//                .map(car -> new CarDto(car.getId(), car.getName()))
+//                .sorted(Comparator.comparing(carDto -> carDto.getId()))
+//                .collect(Collectors.toList());
 
-        return resultList;
+        return carList;
 
     }
 
@@ -73,14 +70,6 @@ public class CarSharingRepository {
         int insertionResult = carDao.save(car);
 
         return insertionResult;
-    }
-
-    public int setRentedCarForCustomer(Customer customer) {
-        Dao customerDao = new CustomerDao(databaseConnection);
-
-       int carRentalResult =  customerDao.update(0L, customer);
-
-       return carRentalResult;
     }
 
     public int getCarId(String carName) {
@@ -120,9 +109,36 @@ public class CarSharingRepository {
         return companyCarList;
     }
 
+    public int setRentedCarForCustomer(Customer customer) {
+        CustomerDao customerDao = new CustomerDao(databaseConnection);
+
+        //Checks if the user tries to rent a new car before returning the current one
+        if(customerDao.hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
+            System.out.println("\nYou have already rented a car!");
+            return -1;
+        }
+//        if(customerDao.hasRentedCar(customer.getName())) {
+//            return -1;
+//        }
+
+        int carRentalResult =  customerDao.update(0L, customer);
+
+        return carRentalResult;
+    }
+
     public int returnRentedCar(Customer customer) {
-        dao = new CustomerDao(databaseConnection);
-        int executionResult = dao.update(0l, customer);
+        CustomerDao customerDao = new CustomerDao(databaseConnection);
+
+        //Checks if the user tries to return a car without previously renting one
+       if(!customerDao.hasRentedCar(customer.getName())) {
+           System.out.println("\nYou didn't rent a car!");
+           return -1;
+        } else if(customerDao.hasRentedCar(customer.getName())) {
+//           System.out.println("\nYou have already rented a car!");
+//           return -1;
+       }
+
+        int executionResult = customerDao.update(0l, customer);
 
         return executionResult;
     }
@@ -132,5 +148,11 @@ public class CarSharingRepository {
         CompanyCar companyCar = (CompanyCar) dao.get(customerName);
 
         return companyCar;
+    }
+
+    public boolean hasRentedCar(String customerName) {
+        CustomerDao customerDao = new CustomerDao(databaseConnection);
+
+        return customerDao.hasRentedCar(customerName);
     }
 }
