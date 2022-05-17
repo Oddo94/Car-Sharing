@@ -50,6 +50,11 @@ public class CustomerMenuCommand implements Command {
                     commandInvoker.executeCommand();
                     break;
 
+                case 3:
+                    Command getRentedCarCommand = new GetRentedCarCommand(receiver, customerName);
+                    commandInvoker.setCommand(getRentedCarCommand);
+                    commandInvoker.executeCommand();
+                    break;
                 //Back command
                 case 0:
                     return -1;

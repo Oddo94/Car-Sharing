@@ -147,5 +147,11 @@ public class Receiver {
         return executionResult;
     }
 
+    public CompanyCar getCustomerRentedCar(String customerName) {
+        CompanyCar companyCar = repository.getCustomerRentedCar(customerName);
+
+        return companyCar;
+    }
+
 
 }

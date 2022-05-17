@@ -31,7 +31,7 @@ public class CarDao implements Dao<Car> {
 
 
     @Override
-    public Car get(long id) {
+    public Car get(String itemName) {
         return null;
     }
 

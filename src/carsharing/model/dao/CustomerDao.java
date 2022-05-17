@@ -38,7 +38,7 @@ private String setRentedCarStatement = "UPDATE CUSTOMER " +
 
 
     @Override
-    public Customer get(long id) {
+    public Customer get(String itemName) {
         return null;
     }
 

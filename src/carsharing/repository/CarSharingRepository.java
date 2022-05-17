@@ -126,4 +126,11 @@ public class CarSharingRepository {
 
         return executionResult;
     }
+
+    public CompanyCar getCustomerRentedCar(String customerName) {
+        dao = new CompanyCarDao(databaseConnection, null);
+        CompanyCar companyCar = (CompanyCar) dao.get(customerName);
+
+        return companyCar;
+    }
 }

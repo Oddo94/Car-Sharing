@@ -11,5 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CompanyCar implements Model {
     String companyName;
-    String name;
+    String carName;
+
+
+    @Override
+    public String getName() {
+        return carName;
+    }
 }

@@ -19,7 +19,7 @@ public class CompanyDao implements Dao<Company>{
 
 
     @Override
-    public Company get(long id) {
+    public Company get(String itemName) {
         return null;
     }
 
