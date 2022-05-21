@@ -13,8 +13,9 @@ public class CarDao implements Dao<Car> {
     private String getCompanyCarListStatement = "SELECT CAR.ID, CAR.NAME FROM COMPANY " +
             "INNER JOIN CAR ON COMPANY.ID = CAR.COMPANY_ID " +
             "WHERE COMPANY.NAME = ?";
-
     private String createCarStatement = "INSERT INTO CAR(NAME, COMPANY_ID) VALUES(?, (SELECT ID FROM COMPANY WHERE NAME = ?))";
+    private String getCarIdStatement = "SELECT ID FROM CAR WHERE NAME = ?";
+
     private Connection databaseConnection;
     private String companyName;
 
@@ -23,9 +24,35 @@ public class CarDao implements Dao<Car> {
         this.companyName = companyName;
     }
 
+    public CarDao(Connection databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
+
+
+
     @Override
-    public Car get(long id) {
+    public Car get(String itemName) {
         return null;
+    }
+
+    @Override
+    public int getItemId(String itemName) {
+        int carId = -1;
+
+        try(PreparedStatement preparedStatement = databaseConnection.prepareStatement(getCarIdStatement)) {
+            preparedStatement.setString(1, itemName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                carId = resultSet.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return carId;
     }
 
     @Override

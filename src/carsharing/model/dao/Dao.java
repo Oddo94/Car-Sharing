@@ -3,7 +3,9 @@ package carsharing.model.dao;
 import java.util.List;
 
 public interface Dao<T> {
-    T get(long id);
+    T get(String itemName);
+
+    int getItemId(String itemName);
 
     List<T> getAll();
 
@@ -12,4 +14,5 @@ public interface Dao<T> {
     int update(long id, T t);
 
     int delete(long id);
+
 }

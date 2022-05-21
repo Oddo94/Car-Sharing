@@ -1,4 +1,4 @@
-package carsharing.model.dto;
+package carsharing.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarDto {
+public class Customer implements Model {
     private int id;
     private String name;
+    private int rentedCarId;
 
-    public CarDto(String name) {
-        this.id = id;
+    public Customer(String name) {
         this.name = name;
     }
+
 }

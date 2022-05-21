@@ -1,7 +1,6 @@
 package carsharing.model.dao;
 
 import carsharing.model.Company;
-import carsharing.model.dto.CompanyDto;
 
 import java.sql.*;
 import java.util.*;
@@ -19,8 +18,13 @@ public class CompanyDao implements Dao<Company>{
 
 
     @Override
-    public Company get(long id) {
+    public Company get(String itemName) {
         return null;
+    }
+
+    @Override
+    public int getItemId(String itemName) {
+        return -1;
     }
 
     @Override

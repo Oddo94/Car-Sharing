@@ -1,6 +1,6 @@
 package carsharing.controller.commands;
 
-import carsharing.model.dto.CompanyDto;
+import carsharing.model.Company;
 import carsharing.utils.InputChecker;
 
 import java.util.List;
@@ -21,13 +21,13 @@ public class CompanyListCommand implements Command {
 
     @Override
     public int execute() {
-        List<CompanyDto> companyList = receiver.getCompanyList();
+        List<Company> companyList = receiver.getCompanyList();
         int count = 1;
+        //Prints the list of retrieved companies
         if(companyList.size() > 0) {
 
             System.out.println("\nChoose the company:");
-
-            for(CompanyDto company : companyList) {
+            for(Company company : companyList) {
                 System.out.println(String.format("%d. %s", count++, company.getName()));
             }
             //Displays the back option
@@ -89,7 +89,6 @@ public class CompanyListCommand implements Command {
                     break;
 
                 case 0:
-                    //receiver.displayMenu(MenuType.MANAGER_MENU);
                    return 0;
 
             }

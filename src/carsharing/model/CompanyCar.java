@@ -9,11 +9,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Company implements Model {
-    private int id;
-    private String name;
+public class CompanyCar implements Model {
+    String companyName;
+    String carName;
 
-    public Company(String name) {
-        this.name = name;
+
+    @Override
+    public String getName() {
+        return carName;
     }
 }

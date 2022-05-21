@@ -44,24 +44,31 @@ public class DatabaseManager {
         DatabaseOperations databaseOperations = new DatabaseOperations(getDatabaseConnection());
 
         String createCompanyTableStatement = "CREATE TABLE IF NOT EXISTS COMPANY(" +
-                "ID INT(10) IDENTITY NOT NULL," +
+                "ID INT(20) IDENTITY NOT NULL," +
                 "NAME VARCHAR(50) NOT NULL UNIQUE," +
                 "PRIMARY KEY(ID))";
 
         String createCarTableStatement = "CREATE TABLE IF NOT EXISTS CAR (" +
-                "ID INT(10) IDENTITY NOT NULL," +
+                "ID INT(20) IDENTITY NOT NULL," +
                 "NAME VARCHAR(50) NOT NULL UNIQUE," +
-                "COMPANY_ID INT(10) NOT NULL," +
+                "COMPANY_ID INT(20) NOT NULL," +
                 "PRIMARY KEY(ID)," +
                 "FOREIGN KEY(COMPANY_ID) REFERENCES COMPANY(ID))";
 
+        String createCustomerTableStatement = "CREATE TABLE IF NOT EXISTS CUSTOMER(" +
+                "ID INT(20) IDENTITY NOT NULL," +
+                "NAME VARCHAR(50) NOT NULL UNIQUE," +
+                "RENTED_CAR_ID INT(20) DEFAULT NULL," +
+                "PRIMARY KEY(ID)," +
+                "FOREIGN KEY(RENTED_CAR_ID) REFERENCES CAR(ID))";
 
         //Creates a new table if it doesn't already exist
         int companyTblCreationResult = databaseOperations.createTable(createCompanyTableStatement);
         int carTblCreationResult = databaseOperations.createTable(createCarTableStatement);
+        int customerTblCreationResult = databaseOperations.createTable(createCustomerTableStatement);
 
 
-        if(companyTblCreationResult == -1 || carTblCreationResult == -1) {
+        if(companyTblCreationResult == -1 || carTblCreationResult == -1 || customerTblCreationResult == -1) {
             return -1;
         }
 
