@@ -90,22 +90,8 @@ private String setRentedCarStatement = "UPDATE CUSTOMER " +
             return -1;
         }
 
-        //Checks if the customer has already rented a car and if he doesn't want to return a rented car
-//        if(hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
-//            return -1;
-//        }
-
-
-//        if(hasRentedCar(customer.getName()) && customer.getRentedCarId() != 0) {
-//            //Customer has already rented a car and tries to rent another one
-//            return -1;
-//        } else if(hasRentedCar(customer.getName())) {
-//            return -1;
-//        }
-
         try (PreparedStatement preparedStatementUpdate = databaseConnection.prepareStatement(setRentedCarStatement)) {
 
-            //preparedStatementUpdate.setString(1, customer.getName());
             //Used for returning the car(null values means that the respective user hasn't rented any car)
             if(customer.getRentedCarId() == 0) {
                 preparedStatementUpdate.setNull(1, Types.INTEGER);

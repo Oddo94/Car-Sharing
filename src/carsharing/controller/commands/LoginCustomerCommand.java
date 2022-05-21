@@ -25,7 +25,6 @@ public class LoginCustomerCommand implements Command {
         Command customerListCommand = new CustomerListCommand(receiver, scanner);
         commandInvoker.setCommand(customerListCommand);
         int displayResult = commandInvoker.executeCommand();
-        //int displayResult = displayCustomerList(customerList);
 
         //Returns if the customer list is empty
         if (displayResult == -1) {
@@ -45,7 +44,6 @@ public class LoginCustomerCommand implements Command {
 
                 String customerName = customerList.get(customerIndex).getName();
 
-                //Invoker commandInvoker = new Invoker();
                 Command customerMenuCommand = new CustomerMenuCommand(receiver, scanner, customerName);
                 commandInvoker.setCommand(customerMenuCommand);
 

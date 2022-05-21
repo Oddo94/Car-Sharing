@@ -31,12 +31,6 @@ public class CompanyCarListCommand implements Command {
     }
 
     private int displayCompanyCars(List<CompanyCar> companyCarList) {
-        //To see if check is necessary
-//        if(companyCarList.size() == 0) {
-//            System.out.println("The company list is empty!");
-//            return -1;
-//        }
-
         int count = 1;
         System.out.println("Choose a car:\n");
         for(CompanyCar companyCar : companyCarList) {

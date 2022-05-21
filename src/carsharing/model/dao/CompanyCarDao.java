@@ -12,7 +12,6 @@ import java.util.List;
 public class CompanyCarDao implements Dao<CompanyCar> {
     private Connection databaseConnection;
     private String companyName;
-    //private String customerName;
 
     //Add condition to filter the rented car from the displayed list
     private String getCompanyCars = "SELECT COMPANY.NAME, CAR.NAME " +
@@ -26,15 +25,6 @@ public class CompanyCarDao implements Dao<CompanyCar> {
                                         "INNER JOIN CAR ON CUSTOMER.RENTED_CAR_ID = CAR.ID " +
                                         "INNER JOIN COMPANY ON CAR.COMPANY_ID = COMPANY.ID " +
                                         "WHERE CUSTOMER.NAME = ?";
-
-
-
-//    private String getCompanyCars = "      SELECT car.id, car.name, car.company_id " +
-//            " FROM car LEFT JOIN customer" +
-//            "ON car.id = customer.rented_car_id" +
-//            "WHERE customer.name IS NULL";
-
-
 
     public CompanyCarDao(Connection databaseConnection, String companyName) {
         this.databaseConnection = databaseConnection;
@@ -82,11 +72,9 @@ public class CompanyCarDao implements Dao<CompanyCar> {
                 String companyName = resultSet.getString(1);
                 String carName = resultSet.getString(2);
 
-                //if(rentedCarId != 0) {
                     CompanyCar companyCar = new CompanyCar(companyName, carName);
 
                     companyCarList.add(companyCar);
-                //}
 
             }
 

@@ -2,7 +2,6 @@ package carsharing;
 
 import carsharing.controller.UIManager;
 import carsharing.database.DatabaseManager;
-import carsharing.utils.FileChecker;
 
 public class Main {
 

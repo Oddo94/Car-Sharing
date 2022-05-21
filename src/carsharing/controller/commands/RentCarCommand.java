@@ -21,68 +21,6 @@ public class RentCarCommand implements Command {
         this.customerName = customerName;
         commandInvoker = new Invoker();
     }
-//    @Override
-//    public int execute() {
-//        //Company list display
-//        List<Company> companyList = receiver.getCompanyList();
-//        int companyDisplayResult = displayElements(companyList, "company");
-//
-//        if(companyDisplayResult == -1) {
-//            return -1;
-//        }
-//
-//        String input = scanner.nextLine().replaceAll(">\\s?", "").trim();
-//
-//        if(!InputChecker.isDigit(input)) {
-//            return -1;
-//        }
-//
-//        int commandValue = Integer.parseInt(input);
-//        //Back command
-//        if(commandValue == 0) {
-//            return -1;
-//        }
-//
-//        //int companyIndex = --commandValue;
-//
-//        //String companyName = companyList.get(companyIndex).getName();
-//        String companyName = getElementName(companyList, commandValue);
-//
-//
-//        //Company car list display
-//        List<CompanyCar> companyCarList = receiver.getCompanyCars(companyName);
-//        int companyCarDisplayResult = displayElements(companyCarList, "car");
-//
-//        input = scanner.nextLine().replaceAll(">\\s?", "").trim();
-//
-//        if(!InputChecker.isDigit(input)) {
-//            return -1;
-//        }
-//
-//        commandValue = Integer.parseInt(input);
-//        //Back command
-//        if(commandValue == 0) {
-//            return -1;
-//        }
-//
-//        String carName = getElementName(companyCarList, commandValue);
-//
-//        int carId = receiver.getCarId(carName);
-//
-//         Customer customer = new Customer(0, customerName, carId);
-//
-//         int rentCarExecutionResult = receiver.rentCar(customer);
-//
-//         if(rentCarExecutionResult == 0) {
-//             System.out.println(String.format("\nYou rented '%s'", carName));
-//             return 0;
-//         } else if(rentCarExecutionResult == -1) {
-//             System.out.println("You've already rented a car!");
-//             return -1;
-//         }
-//
-//        return 0;
-//    }
 
     @Override
     public int execute() {
@@ -113,9 +51,6 @@ public class RentCarCommand implements Command {
             return -1;
         }
 
-        //int companyIndex = --commandValue;
-
-        //String companyName = companyList.get(companyIndex).getName();
         String companyName = getElementName(companyList, commandValue);
 
 
@@ -147,11 +82,6 @@ public class RentCarCommand implements Command {
             System.out.println(String.format("\nYou rented '%s'", carName));
             return 0;
         }
-//        } else if(rentCarExecutionResult == -1) {
-//            System.out.println("You've already rented a car!");
-//            return -1;
-//        }
-
         return 0;
     }
 

@@ -8,9 +8,7 @@ import carsharing.model.dao.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CarSharingRepository {
 
@@ -26,19 +24,11 @@ public class CarSharingRepository {
 
         List<Company> companyList = companyDao.getAll();
 
-//        List<CompanyDto> resultList = companiesList.stream()
-//                .map(company -> new CompanyDto(company.getId(), company.getName()))
-//                .sorted(Comparator.comparing(companyDto -> companyDto.getId()))
-//                .collect(Collectors.toList());
-
-       // return resultList;
         return companyList;
     }
 
     public int insertCompany(Company company) {
         CompanyDao companyDao = new CompanyDao(databaseConnection);
-
-        //Company company = new Company(companyDto.getName());
 
         int insertionResult = companyDao.save(company);
 
@@ -53,12 +43,6 @@ public class CarSharingRepository {
         if(carList.size() == 0) {
             return new ArrayList<Car>();
         }
-
-//        List<CarDto> resultList = carList
-//                .stream()
-//                .map(car -> new CarDto(car.getId(), car.getName()))
-//                .sorted(Comparator.comparing(carDto -> carDto.getId()))
-//                .collect(Collectors.toList());
 
         return carList;
 
@@ -84,12 +68,6 @@ public class CarSharingRepository {
         CustomerDao customerDao = new CustomerDao(databaseConnection);
 
         List<Customer> customerList = customerDao.getAll();
-
-//        List<CustomerDto> resultList = customerList
-//                .stream()
-//                .sorted(Comparator.comparing(customer -> customer.getId()))
-//                .map(customer -> new CustomerDto(customer.getName()))
-//                .collect(Collectors.toList());
 
         return customerList;
     }
@@ -117,9 +95,6 @@ public class CarSharingRepository {
             System.out.println("\nYou have already rented a car!");
             return -1;
         }
-//        if(customerDao.hasRentedCar(customer.getName())) {
-//            return -1;
-//        }
 
         int carRentalResult =  customerDao.update(0L, customer);
 
@@ -133,10 +108,7 @@ public class CarSharingRepository {
        if(!customerDao.hasRentedCar(customer.getName())) {
            System.out.println("\nYou didn't rent a car!");
            return -1;
-        } else if(customerDao.hasRentedCar(customer.getName())) {
-//           System.out.println("\nYou have already rented a car!");
-//           return -1;
-       }
+        }
 
         int executionResult = customerDao.update(0l, customer);
 

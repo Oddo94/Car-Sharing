@@ -17,7 +17,6 @@ public class InsertCustomerCommand implements Command {
         System.out.println("\nEnter the customer name:");
         String input = scanner.nextLine().replaceAll("> ", "").trim();
 
-        //System.out.println("\nInserted customer name: " + input);
         Customer customer = new Customer(input);
         int executionResult = receiver.insertCustomer(customer);
 

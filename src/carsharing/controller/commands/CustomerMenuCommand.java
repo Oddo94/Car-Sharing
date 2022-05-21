@@ -22,8 +22,6 @@ public class CustomerMenuCommand implements Command {
 
     @Override
     public int execute() {
-        //Needs logic for handling the user selected option
-        //int executionResult = receiver.displayMenu(MenuType.CUSTOMER_MENU);
 
         while(true) {
 

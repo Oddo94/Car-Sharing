@@ -4,7 +4,6 @@ import carsharing.model.Car;
 import carsharing.model.Company;
 import carsharing.model.CompanyCar;
 import carsharing.model.Customer;
-import carsharing.model.dao.CustomerDao;
 import carsharing.model.enums.MenuType;
 import carsharing.repository.CarSharingRepository;
 
@@ -60,7 +59,6 @@ public class Receiver {
                 return -1;
         }
 
-        //System.out.println();
         System.out.println(menu);
 
         return 0;
@@ -106,17 +104,6 @@ public class Receiver {
 
     public List<Customer> getCustomerList() {
         List<Customer> customerList = repository.getAllCustomers();
-
-//        int count = 1;
-//        if(customerList.size() == 0) {
-//            System.out.println("The customer list is empty!");
-//            return -1;
-//        }
-//
-//        System.out.println("\nChoose a customer:");
-//        for(CustomerDto customer : customerList) {
-//            System.out.println(String.format("%d. %s", count++, customer.getName()));
-//        }
 
         return customerList;
     }
